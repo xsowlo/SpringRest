@@ -9,6 +9,9 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
 
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_USER = "ROLE_USER";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,8 +19,8 @@ public class Role implements GrantedAuthority {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
     @JsonIgnore
+    @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
     public Role() {}

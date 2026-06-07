@@ -27,25 +27,24 @@ public class Dtinitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+        Role adminRole = roleRepository.findByName(Role.ROLE_ADMIN);
         if (adminRole == null) {
-            adminRole = new Role("ROLE_ADMIN");
+            adminRole = new Role(Role.ROLE_ADMIN);
             roleRepository.save(adminRole);
             System.out.println("Created ROLE_ADMIN");
         }
 
-        Role userRole = roleRepository.findByName("ROLE_USER");
+        Role userRole = roleRepository.findByName(Role.ROLE_USER);
         if (userRole == null) {
-            userRole = new Role("ROLE_USER");
+            userRole = new Role(Role.ROLE_USER);
             roleRepository.save(userRole);
             System.out.println("Created ROLE_USER");
         }
 
-        if (userRepository.findByUsername("admin") == null) {
+        if (userRepository.findByEmail("admin@example.com") == null) {
             User admin = new User();
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("admin"));
             admin.setEmail("admin@example.com");
+            admin.setPassword(passwordEncoder.encode("admin"));
             admin.setFirstName("admin");
             admin.setLastName("admin");
             admin.setAge(35);
@@ -54,9 +53,8 @@ public class Dtinitializer implements CommandLineRunner {
             roles.add(userRole);
             admin.setRoles(roles);
             userRepository.save(admin);
-            System.out.println("Created admin user");
+            System.out.println("Created admin user with email: admin@example.com");
         }
-
     }
 }
 
